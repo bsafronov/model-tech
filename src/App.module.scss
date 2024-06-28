@@ -1,0 +1,11 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 4;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
