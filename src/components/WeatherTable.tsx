@@ -25,6 +25,8 @@ export const WeatherTable = () => {
   const weatherTypeName = (record: WeatherRecord) =>
     weatherTypes?.find((type) => type.id === record.typeId)?.label;
 
+  const temperatureFormat = (record: WeatherRecord) => `${record.value} ℃`;
+
   const removeWeatherRecordButton = (record: WeatherRecord) => (
     <Button
       onClick={() => removeWeatherRecord(record.id)}
@@ -38,7 +40,7 @@ export const WeatherTable = () => {
   return (
     <DataTable value={data} emptyMessage="Записи отсутствуют">
       <Column field="date" header="Дата и время" body={dateFormat} />
-      <Column field="value" header="Температура" />
+      <Column field="value" header="Температура" body={temperatureFormat} />
       <Column field="typeId" header="Погода" body={weatherTypeName} />
       <Column field="authorId" header="Кто заполнил" body={authorName} />
       <Column field="comment" header="Комментарий" />

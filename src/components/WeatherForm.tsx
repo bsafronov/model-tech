@@ -11,17 +11,23 @@ import { InputNumber } from "primereact/inputnumber";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
-  weatherType: z.object({
-    id: z.number(),
-    label: z.string(),
-  }),
-  author: z.object({
-    id: z.number(),
-    name: z.string(),
-  }),
+  weatherType: z.object(
+    {
+      id: z.number(),
+      label: z.string(),
+    },
+    { required_error: "Обязательное поле" }
+  ),
+  author: z.object(
+    {
+      id: z.number(),
+      name: z.string(),
+    },
+    { required_error: "Обязательное поле" }
+  ),
   comment: z.string(),
   temperature: z
-    .number()
+    .number({ invalid_type_error: "Введите число" })
     .min(-50, "Значение не может быть меньше -50")
     .max(60, "Значение не может быть больше 60"),
 });
@@ -88,6 +94,11 @@ export const WeatherForm = () => {
                 </>
               )}
             />
+            {errors.weatherType?.message && (
+              <p className={styles.form__error}>
+                {errors.weatherType?.message}
+              </p>
+            )}
           </div>
           <div className={styles.form__item}>
             <label htmlFor="authorId" className={styles.form__label}>
@@ -107,6 +118,9 @@ export const WeatherForm = () => {
                 </>
               )}
             />
+            {errors.author?.message && (
+              <p className={styles.form__error}>{errors.author?.message}</p>
+            )}
           </div>
 
           <div className={styles.form__item}>
@@ -132,12 +146,17 @@ export const WeatherForm = () => {
                     disabled={disabled}
                     value={value}
                     onValueChange={onChange}
+                    suffix="℃"
+                    useGrouping={false}
+                    locale="ru-RU"
                   />
                 </>
               )}
             />
             {errors.temperature?.message && (
-              <p>{errors.temperature?.message}</p>
+              <p className={styles.form__error}>
+                {errors.temperature?.message}
+              </p>
             )}
           </div>
           <div className={styles.form__item}>

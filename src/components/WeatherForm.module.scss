@@ -24,4 +24,10 @@
     display: flex;
     justify-content: flex-end;
   }
+
+  &__error {
+    margin: 0.25rem 0;
+    color: rgb(194, 48, 48);
+    font-weight: 500;
+  }
 }
