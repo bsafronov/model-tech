@@ -7,6 +7,8 @@ export type WeatherRecord = {
   value: number;
 };
 
+export type CreateWeatherRecord = Omit<WeatherRecord, "id" | "createdAt">;
+
 export type WeatherType = {
   id: ID;
   label: string;

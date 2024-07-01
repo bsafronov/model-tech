@@ -30,11 +30,11 @@ export const WeatherForm = () => {
   const [open, setOpen] = useState(false);
   const { data: weatherTypes } = weatherApi.useGetWeatherTypesQuery();
   const { data: users } = userApi.useGetUsersQuery();
+  const [addWeatherRecord] = weatherApi.useAddWeatherRecordMutation();
 
   const {
     handleSubmit,
     control,
-    watch,
     formState: { errors },
   } = useForm<z.infer<typeof schema>>({
     defaultValues: {
@@ -47,12 +47,17 @@ export const WeatherForm = () => {
     mode: "onChange",
   });
 
-  console.log(watch("temperature"));
-
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    console.log(errors);
-  });
+  const onSubmit = handleSubmit(
+    ({ author, weatherType, comment, temperature }) => {
+      addWeatherRecord({
+        authorId: author.id,
+        typeId: weatherType.id,
+        comment,
+        value: temperature,
+      });
+      setOpen(false);
+    }
+  );
 
   return (
     <>
